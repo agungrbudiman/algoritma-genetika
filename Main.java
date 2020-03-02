@@ -1,6 +1,6 @@
 public class Main {
     public static void main(String []args) {
         Data.loadData();
-        Generation.run(1000,20,0.2);
+        Generation.run(1000,50,0.2);
     }
 }

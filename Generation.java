@@ -4,6 +4,7 @@ import java.util.ArrayList;
 public class Generation {
     private static List<Population> generation = new ArrayList<>();;
     private static double bestOverall;
+    private static int idx_bestOverall;
     
     private static void init(int popSize) {
         Population p = new Population(popSize);
@@ -18,10 +19,14 @@ public class Generation {
             nextGeneration(i,popSize,mutationRate);
             if(generation.get(i).bestDistance < bestOverall) {
                 bestOverall = generation.get(i).bestDistance;
+                idx_bestOverall = i;
             }
         }
         System.out.printf("First Gen Shortest Distance : %.2f\n", generation.get(0).bestDistance);
-        System.out.printf("Global Shortest Distance : %.2f\n", bestOverall);
+        System.out.printf("Global Shortest Distance @ Gen-"+idx_bestOverall+": %.2f\n", bestOverall);
+        System.out.println("============================================================================");
+        Population p = generation.get(idx_bestOverall);
+        p.getChromosome(p.idx_bestDistance).printKecamatan();
     }
 
     public static void nextGeneration(int idx, int popSize, double mutationRate) { 

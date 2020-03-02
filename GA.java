@@ -52,6 +52,7 @@ public class GA {
             int point1 = rnd.nextInt(Data.size-1);
             int point2 = rnd.nextInt(Data.size-1);
             c.swapGene(point1, point2);
+            // System.out.println("mutation");
         }
 
     }

@@ -63,4 +63,9 @@ public class Chromosome {
         System.out.printf(" (%.2f)", distance);
         System.out.printf("(%.5f)", fitness);
     }
+    public void printKecamatan() {
+        for (int i = 0; i < chromosome.size(); i++) {
+            System.out.print(Data.kecamatan[chromosome.get(i)]+"-");
+        }
+    }
 }

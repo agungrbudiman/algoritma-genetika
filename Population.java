@@ -6,6 +6,7 @@ public class Population {
     private List<Chromosome> population;
     private Random rnd = new Random();
     public double bestDistance = Double.POSITIVE_INFINITY;
+    public int idx_bestDistance;
 
     public Population(List<Chromosome> population) {
         this.population = population;
@@ -24,11 +25,15 @@ public class Population {
     }
 
     public void normalizeFitness() {
-        for (Chromosome c : population) {
-            c.normalizeFitness();
-            if(c.getDistance() < bestDistance) { //numpang
-                bestDistance = c.getDistance();
-            }
+        for (int i = 0; i < population.size(); i++) {
+            population.get(i).normalizeFitness();
+            calcShortest(i);
+        }
+    }
+    private void calcShortest(int i) {
+        if(population.get(i).getDistance() < bestDistance) { //numpang
+            bestDistance = population.get(i).getDistance();
+            idx_bestDistance = i;
         }
     }
     
@@ -45,13 +50,16 @@ public class Population {
     public void addChromosome(Chromosome c) {
         population.add(c);
     }
+    public Chromosome getChromosome(int i) {
+        return population.get(i);
+    }
     public int getSize() {
         return population.size();
     }
     public void print() {
         System.out.printf("Shortest Distance : %.2f\n",bestDistance);
-        for (Chromosome c : population) {
-            c.print();System.out.println();
-        }
+        // for (Chromosome c : population) {
+        //     c.print();System.out.println();
+        // }
     }
 }
