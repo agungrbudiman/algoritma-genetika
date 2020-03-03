@@ -47,6 +47,6 @@ public class Generation {
     private static void print(int i) {
         System.out.println("Generation-"+i);
         generation.get(i).print();
-        System.out.println("============================================================================");
+        System.out.println("===============");
     }
  }
