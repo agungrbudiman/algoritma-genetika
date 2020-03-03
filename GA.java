@@ -5,14 +5,11 @@ import java.util.Random;
 public class GA {
 
     static Random rnd = new Random();
-    private static int cutPoint1, cutPoint2;
 
-    public static Chromosome ox1_crossover(Chromosome p1, Chromosome p2, Boolean b) {
+    public static Chromosome ox1_crossover(Chromosome p1, Chromosome p2) {
         if(rnd.nextDouble() <= 1) {
-            if(b) {
-                cutPoint1 = rnd.nextInt(Data.size-1); //generate cut point
-                cutPoint2 = rnd.nextInt(Data.size-1);
-            }
+            int cutPoint1 = rnd.nextInt(Data.size-1); //generate cut point
+            int cutPoint2 = rnd.nextInt(Data.size-1);
             if(cutPoint1 > cutPoint2) { //swap if cutpoint1 > cutpoint2
                 int temp = cutPoint2;
                 cutPoint2 = cutPoint1;

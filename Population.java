@@ -58,6 +58,7 @@ public class Population {
     }
     public void print() {
         System.out.printf("Shortest Distance : %.2f\n",bestDistance);
+        population.get(idx_bestDistance).printKecamatan();System.out.println();
         // for (Chromosome c : population) {
         //     c.print();System.out.println();
         // }
