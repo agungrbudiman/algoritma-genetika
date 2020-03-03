@@ -5,54 +5,61 @@ import java.util.Random;
 public class GA {
 
     static Random rnd = new Random();
+    private static int cutPoint1, cutPoint2;
 
-    public static Chromosome ox1_crossover(Chromosome p1, Chromosome p2) {
-        int cutPoint1 = rnd.nextInt(Data.size-1); //generate cut point
-        int cutPoint2 = rnd.nextInt(Data.size-1);
-        if(cutPoint1 > cutPoint2) { //swap if cutpoint1 > cutpoint2
-            int temp = cutPoint2;
-            cutPoint2 = cutPoint1;
-            cutPoint1 = temp;
-        }
-        
-        List<Integer> gene = new ArrayList<>();
-        List<Integer> p2_copy = new ArrayList<>();
-        
-        // add non duplicate data from p2 into p2_copy
-        for (int i = 0; i < Data.size; i++) {
-            for (int j = cutPoint1; j <= cutPoint2; j++) { //check with every data in cutpoint
-                if(p2.getGene(i) == p1.getGene(j)) {
-                    break;
-                }
-                else if(j == cutPoint2) { //end of the loop ~ different than anything
-                    p2_copy.add(p2.getGene(i));
+    public static Chromosome ox1_crossover(Chromosome p1, Chromosome p2, Boolean b) {
+        if(rnd.nextDouble() <= 1) {
+            if(b) {
+                cutPoint1 = rnd.nextInt(Data.size-1); //generate cut point
+                cutPoint2 = rnd.nextInt(Data.size-1);
+            }
+            if(cutPoint1 > cutPoint2) { //swap if cutpoint1 > cutpoint2
+                int temp = cutPoint2;
+                cutPoint2 = cutPoint1;
+                cutPoint1 = temp;
+            }
+            
+            List<Integer> gene = new ArrayList<>();
+            List<Integer> p2_copy = new ArrayList<>();
+            
+            // add non duplicate data from p2 into p2_copy
+            for (int i = 0; i < Data.size; i++) {
+                for (int j = cutPoint1; j <= cutPoint2; j++) { //check with every data in cutpoint
+                    if(p2.getGene(i) == p1.getGene(j)) {
+                        break;
+                    }
+                    else if(j == cutPoint2) { //end of the loop ~ different than anything
+                        p2_copy.add(p2.getGene(i));
+                    }
                 }
             }
+            
+            // add element before cutpoint1 into child
+            for (int i = 0; i < cutPoint1; i++) {
+                gene.add(p2_copy.get(i));
+            }
+            // add element inside cutpoint into child
+            for (int i = cutPoint1; i <= cutPoint2; i++) {
+                gene.add(p1.getGene(i));
+            }
+            // add element after cutpoint2 into child
+            for (int i = cutPoint1; i < p2_copy.size(); i++) {
+                gene.add(p2_copy.get(i));
+            }
+            
+            Chromosome child = new Chromosome(gene);
+            return child;
         }
-        
-        // add element before cutpoint1 into child
-        for (int i = 0; i < cutPoint1; i++) {
-            gene.add(p2_copy.get(i));
+        else {
+            return p1;
         }
-        // add element inside cutpoint into child
-        for (int i = cutPoint1; i <= cutPoint2; i++) {
-            gene.add(p1.getGene(i));
-        }
-        // add element after cutpoint2 into child
-        for (int i = cutPoint1; i < p2_copy.size(); i++) {
-            gene.add(p2_copy.get(i));
-        }
-        
-        Chromosome child = new Chromosome(gene);
-        return child;
     }
     
     public static void swap_mutation(Chromosome c, double rate) {
-        if(rnd.nextDouble() < rate) { //mutation probability
+        if(rnd.nextDouble() <= rate) { //mutation probability
             int point1 = rnd.nextInt(Data.size-1);
             int point2 = rnd.nextInt(Data.size-1);
             c.swapGene(point1, point2);
-            // System.out.println("mutation");
         }
 
     }

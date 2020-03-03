@@ -32,10 +32,19 @@ public class Generation {
     public static void nextGeneration(int idx, int popSize, double mutationRate) { 
         Population newPop = new Population();
         Chromosome.sumFitness = 0;
+
+        Chromosome p1 = generation.get(idx).naturalSelection();
+        Chromosome p2 = generation.get(idx).naturalSelection();
+        Chromosome child1 = GA.ox1_crossover(p1, p2, true);
+        Chromosome child2 = GA.ox1_crossover(p2, p1, false);
+        GA.swap_mutation(child1, mutationRate);
+        GA.swap_mutation(child2, mutationRate);
+        newPop.addChromosome(child1);
+        newPop.addChromosome(child2);
         do{
-            Chromosome p1 = generation.get(idx).naturalSelection();
-            Chromosome p2 = generation.get(idx).naturalSelection();
-            Chromosome child = GA.ox1_crossover(p1, p2);
+            p1 = generation.get(idx).naturalSelection();
+            p2 = generation.get(idx).naturalSelection();
+            Chromosome child = GA.ox1_crossover(p1, p2, true);
             GA.swap_mutation(child, mutationRate);
             newPop.addChromosome(child);
         }
@@ -44,9 +53,6 @@ public class Generation {
         generation.add(newPop);
     }
 
-    // public static Population getPopulation(int i) {
-    //     return generation.get(i);
-    // }
     private static void print(int i) {
         System.out.println("Generation-"+i);
         generation.get(i).print();
