@@ -15,23 +15,24 @@ public class Generation {
     public static void run(int genSize, int popSize, double mutationRate) {
         init(popSize);
         for (int i = 0; i < genSize; i++) {
-            print(i);
             nextGeneration(i,popSize,mutationRate);
+            print(i);
             if(generation.get(i).bestDistance < bestOverall) {
                 bestOverall = generation.get(i).bestDistance;
                 idx_bestOverall = i;
             }
         }
-        System.out.printf("First Gen Shortest Distance : %.2f\n", generation.get(0).bestDistance);
-        System.out.printf("Global Shortest Distance @ Gen-"+idx_bestOverall+": %.2f\n", bestOverall);
-        System.out.println("============================================================================");
-        Population p = generation.get(idx_bestOverall);
-        p.getChromosome(p.idx_bestDistance).printKecamatan();
+        System.out.printf("First Gen Shortest : %.2f KM\n", generation.get(0).bestDistance);
+        System.out.printf("Global Shortest @Gen-"+idx_bestOverall+": %.2f KM\n", bestOverall);
+        System.out.print("===============\nRute : ");
+        generation.get(idx_bestOverall).getBestChromosome().printRoute();
     }
 
     public static void nextGeneration(int idx, int popSize, double mutationRate) { 
         Population newPop = new Population();
         Chromosome.sumFitness = 0;
+        // Chromosome bestP1 = generation.get(idx).getBestChromosome();
+        // newPop.addChromosome(bestP1); //add best parent from previous generation ~ elitism
         do{
             Chromosome p1 = generation.get(idx).naturalSelection();
             Chromosome p2 = generation.get(idx).naturalSelection();

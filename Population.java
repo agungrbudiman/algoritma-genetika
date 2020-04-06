@@ -31,7 +31,7 @@ public class Population {
         }
     }
     private void calcShortest(int i) {
-        if(population.get(i).getDistance() < bestDistance) { //numpang
+        if(population.get(i).getDistance() < bestDistance) {
             bestDistance = population.get(i).getDistance();
             idx_bestDistance = i;
         }
@@ -53,11 +53,14 @@ public class Population {
     public Chromosome getChromosome(int i) {
         return population.get(i);
     }
+    public Chromosome getBestChromosome() {
+        return population.get(idx_bestDistance);
+    }
     public int getSize() {
         return population.size();
     }
     public void print() {
-        System.out.printf("Shortest Distance : %.2f\n",bestDistance);
+        System.out.printf("Shortest Distance: %.2f KM\n",bestDistance);
         // population.get(idx_bestDistance).printKecamatan();System.out.println();
         // for (Chromosome c : population) {
         //     c.print();System.out.println();

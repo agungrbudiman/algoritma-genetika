@@ -9,7 +9,7 @@ public class GA {
     public static Chromosome ox1_crossover(Chromosome p1, Chromosome p2) {
         int cutPoint1 = rnd.nextInt(16); //generate cut point
         int cutPoint2 = rnd.nextInt(16-cutPoint1)+cutPoint1;
-        
+
         List<Integer> gene = new ArrayList<>();
         List<Integer> p2_copy = new ArrayList<>();
         
